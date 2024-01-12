@@ -140,12 +140,31 @@ add_action( 'widgets_init', 'raccocleaning_widgets_init' );
 function raccocleaning_scripts() {
 	wp_enqueue_style( 'raccocleaning-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'raccocleaning-style', 'rtl', 'replace' );
-
+	
 	wp_enqueue_script( 'raccocleaning-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+	
+	wp_enqueue_style('critical-style', get_template_directory_uri() . '/src/styles/critical.css');
+    wp_enqueue_style('app-style', get_template_directory_uri() . '/src/styles/app.css');
+    wp_enqueue_style('fancybox-style', get_template_directory_uri() . '/src/styles/jquery.fancybox.min.css');
+
+    // Підключення скриптів
+	wp_deregister_script( 'jquery' );
+	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
+	wp_enqueue_script( 'jquery' );
+	// wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
+
+    wp_enqueue_script('lottie', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js', array(), '', false);
+
+	wp_enqueue_script('inputmask', get_template_directory_uri() . '/src/scripts/jquery.inputmask.min.js', array('jquery'), '', true);
+    wp_enqueue_script('validate', get_template_directory_uri() . '/src/scripts/jquery.validate.min.js', array('jquery'), '', true);
+    wp_enqueue_script('additional-methods', get_template_directory_uri() . '/src/scripts/additional-methods.min.js', array('jquery'), '', true);
+    wp_enqueue_script('fancybox', get_template_directory_uri() . '/src/scripts/jquery.fancybox.min.js', array('jquery'), '', true);
+    wp_enqueue_script('swiper', get_template_directory_uri() . '/src/scripts/swiper.js', array() );
+    wp_enqueue_script('app', get_template_directory_uri() . '/src/scripts/app.js', array('jquery'), '', true);
 }
 add_action( 'wp_enqueue_scripts', 'raccocleaning_scripts' );
 
