@@ -4,6 +4,7 @@
  * @param {options} obj - object width params
  */
 
+
 $.validator.setDefaults({
     ignore: []
 });
