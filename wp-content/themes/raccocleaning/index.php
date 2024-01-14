@@ -14,10 +14,6 @@
 
 get_header();
 ?>
-		<!--wp-content/themes/raccocleaning/src/static/app/img/avatar.png
-		<img src="<?php bloginfo('template_url'); ?>/src/static/app/img/promo.png" alt="" role="presentation" />
-		 <img src="wp-content/themes/raccocleaning/src/static/app/img/avatar.png" alt="" role="presentation" />
-		<img src="<?php echo get_template_directory_uri(); ?>/src/static/app/img/promo.png" alt="" role="presentation" /> -->
 
 	<main class="content">
         <section class="promo">

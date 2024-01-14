@@ -379,7 +379,7 @@ function submitForm(form) {
                 renderer: 'svg',
                 loop: false,
                 autoplay: true,
-                path: '/static/app/img/ico-plane.json' // the path to the animation json
+                path: '/wp-content/themes/raccocleaning/src/static/app/img/ico-plane.json' // the path to the animation json
             });
         })
         $.fancybox.open({
