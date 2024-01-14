@@ -151,11 +151,14 @@ function raccocleaning_scripts() {
     wp_enqueue_style('app-style', get_template_directory_uri() . '/src/styles/app.css');
     wp_enqueue_style('fancybox-style', get_template_directory_uri() . '/src/styles/jquery.fancybox.min.css');
 
+	wp_enqueue_script('ajax-form', get_template_directory_uri() . '/js/ajax-form.js', array('jquery'), null, true);
+
+    wp_localize_script('ajax-form', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+
     // Підключення скриптів
 	wp_deregister_script( 'jquery' );
 	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
 	wp_enqueue_script( 'jquery' );
-	// wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
 
     wp_enqueue_script('lottie', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js', array(), '', false);
 
@@ -163,8 +166,10 @@ function raccocleaning_scripts() {
     wp_enqueue_script('validate', get_template_directory_uri() . '/src/scripts/jquery.validate.min.js', array('jquery'), '', true);
     wp_enqueue_script('additional-methods', get_template_directory_uri() . '/src/scripts/additional-methods.min.js', array('jquery'), '', true);
     wp_enqueue_script('fancybox', get_template_directory_uri() . '/src/scripts/jquery.fancybox.min.js', array('jquery'), '', true);
-    wp_enqueue_script('swiper', get_template_directory_uri() . '/src/scripts/swiper.js', array() );
+    wp_enqueue_script('swiper', get_template_directory_uri() . '/src/scripts/swiper.js', array(), true);
     wp_enqueue_script('app', get_template_directory_uri() . '/src/scripts/app.js', array('jquery'), '', true);
+
+	
 }
 add_action( 'wp_enqueue_scripts', 'raccocleaning_scripts' );
 
@@ -195,3 +200,34 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+function process_form() {
+    $name = sanitize_text_field($_POST['name']);
+    $tel = sanitize_text_field($_POST['tel']);
+    $email = sanitize_email($_POST['email']);
+    $address = sanitize_text_field($_POST['address']);
+    $service = sanitize_text_field($_POST['service']);
+    $square = sanitize_text_field($_POST['square']);
+    $bedrooms = intval($_POST['bedrooms']);
+    $bathrooms = intval($_POST['bathrooms']);
+
+    $processed_data = array(
+        'name' => $name,
+        'tel' => $tel,
+        'email' => $email,
+        'address' => $address,
+        'service' => $service,
+        'square' => $square,
+        'bedrooms' => $bedrooms,
+        'bathrooms' => $bathrooms,
+    );
+
+     echo '<script>console.log(' . json_encode($processed_data) . ')</script>';
+   
+    wp_send_json($processed_data);
+
+   
+    wp_die();
+}
+
+add_action('wp_ajax_process_form', 'process_form');
+add_action('wp_ajax_nopriv_process_form', 'process_form');
