@@ -7,8 +7,7 @@ jQuery(document).ready(function($) {
             url: ajax_object.ajax_url,
             data: formData + '&action=process_form',
             success: function(response) {
-                console.log('Ajax success:', response);
-              
+                 console.log( 'success response ', response);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Ajax error:', textStatus, errorThrown);

@@ -155,7 +155,6 @@ function raccocleaning_scripts() {
 
     wp_localize_script('ajax-form', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 
-    // Підключення скриптів
 	wp_deregister_script( 'jquery' );
 	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
 	wp_enqueue_script( 'jquery' );
@@ -200,6 +199,31 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+// create aplications post type
+function create_application_post_type() {
+    register_post_type('application', array(
+        'labels' => array(
+            'name' => __('Applications'),
+            'singular_name' => __('Application'),
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array('title', 'custom-fields'),
+		'menu_icon' => 'dashicons-heart',
+    ));
+}
+add_action('init', 'create_application_post_type');
+
+//add customer user role
+function add_customer_user_role() {
+    add_role('customer', 'Customer', array(
+        'read' => true,
+        'level_0' => true,
+    ));
+}
+add_action('init', 'add_customer_user_role');
+
+// function form processings
 function process_form() {
     $name = sanitize_text_field($_POST['name']);
     $tel = sanitize_text_field($_POST['tel']);
@@ -210,6 +234,10 @@ function process_form() {
     $bedrooms = intval($_POST['bedrooms']);
     $bathrooms = intval($_POST['bathrooms']);
 
+    // post customer name
+    $post_title = 'New customer - ' . $name;
+
+    // datanfor response ajax
     $processed_data = array(
         'name' => $name,
         'tel' => $tel,
@@ -221,11 +249,35 @@ function process_form() {
         'bathrooms' => $bathrooms,
     );
 
-     echo '<script>console.log(' . json_encode($processed_data) . ')</script>';
-   
+    // create post with form data
+    $post_id = wp_insert_post(array(
+        'post_title' => $post_title,
+        'post_type' => 'application',
+        'post_status' => 'publish',
+    ));
+
+    // create user using form data
+    $username = sanitize_user($name);
+    $password = wp_generate_password();
+    $user_id = wp_create_user($username, $password, $email);
+
+    // add role for user
+    $user = new WP_User($user_id);
+    $user->add_role('customer');
+
+    // update meta data for post
+    update_post_meta($post_id, 'name', $name);
+    update_post_meta($post_id, 'tel', $tel);
+    update_post_meta($post_id, 'email', $email);
+    update_post_meta($post_id, 'address', $address);
+    update_post_meta($post_id, 'service', $service);
+    update_post_meta($post_id, 'square', $square);
+    update_post_meta($post_id, 'bedrooms', $bedrooms);
+    update_post_meta($post_id, 'bathrooms', $bathrooms);
+
+
     wp_send_json($processed_data);
 
-   
     wp_die();
 }
 
