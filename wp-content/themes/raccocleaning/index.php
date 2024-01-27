@@ -324,8 +324,6 @@ get_header();
             </div>
           </div>
         </section>
-		
-
         <section class="services" id="services">
           <div class="container">
             <div class="section-title">
@@ -745,7 +743,7 @@ get_header();
             </div>
           </div>
         </section>
-      </main>
+  </main>
 
 	
 
