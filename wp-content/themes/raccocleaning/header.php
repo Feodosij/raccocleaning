@@ -33,12 +33,19 @@
                 <img src="<?php echo get_template_directory_uri(); ?>/src/static/app/img/logo-black.svg" class="header__logo-black" alt="RaccoCleaning">
               </a>
             </div>
-            <nav class="header__nav">
-              <ul>
-                <li><a href="#services">Our Services</a></li>
-                <li><a href="#faq">FAQ</a></li>
-              </ul>
-            </nav>
+
+            <?php
+              wp_nav_menu(
+                array(
+                  'theme_location'   => 'header_menu',
+                  'menu_id'          => 'primary-menu',
+                  'container'        => 'nav', 
+                  'container_class'  => 'header__nav',
+                  'menu_class'       => '',
+                )
+              );
+            ?>
+            
             <div class="header__btns">
               <a href="tel:+18479573957" class="button  button--color-primary-2   button--no-border mobile-hide  ">
                 <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,16 +71,4 @@
           </div>
         </div>
       </header>
-	
-		<!-- <nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'raccocleaning' ); ?></button>
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'menu-1',
-					'menu_id'        => 'primary-menu',
-				)
-			);
-			?>
-		</nav> -->
 	
