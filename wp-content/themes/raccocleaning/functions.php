@@ -208,8 +208,7 @@ function create_application_post_type() {
             'singular_name' => __('Application'),
         ),
         'public' => true,
-        'has_archive' => true,
-        'supports' => array('title', 'custom-fields'),
+        'supports' => array('title'),
 		'menu_icon' => 'dashicons-heart',
     ));
 }
@@ -234,6 +233,23 @@ function process_form() {
     $square = sanitize_text_field($_POST['square']);
     $bedrooms = intval($_POST['bedrooms']);
     $bathrooms = intval($_POST['bathrooms']);
+
+	//mail body
+	$email_body = "New customer information:\n\n";
+    $email_body .= "Name: $name\n";
+    $email_body .= "Phone: $tel\n";
+    $email_body .= "Email: $email\n";
+    $email_body .= "Address: $address\n";
+    $email_body .= "Service: $service\n";
+    $email_body .= "Square: $square\n";
+    $email_body .= "Bedrooms: $bedrooms\n";
+    $email_body .= "Bathrooms: $bathrooms\n";
+
+    // send mail to admin email
+    $admin_email = get_option('admin_email');
+    $subject = 'New customer information';
+    wp_mail($admin_email, $subject, $email_body);
+	var_dump($admin_email, $subject, $email_body);
 
     // post customer name
     $post_title = 'New customer - ' . $name;
