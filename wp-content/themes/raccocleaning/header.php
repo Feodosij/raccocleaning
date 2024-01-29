@@ -47,7 +47,7 @@
             ?>
             
             <div class="header__btns">
-              <a href="tel:+18479573957" class="button  button--color-primary-2   button--no-border mobile-hide  ">
+              <a href="tel:<?php echo str_replace(' ', '', get_field('phone_number')); ?>" class="button  button--color-primary-2   button--no-border mobile-hide  ">
                 <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_142_56)">
                     <path d="M14.5916 11.5085L12.4983 9.41519C11.7507 8.66759 10.4798 8.96666 10.1807 9.93852C9.95646 10.6114 9.20886 10.9852 8.53601 10.8356C7.0408 10.4618 5.02227 8.51807 4.64847 6.9481C4.42418 6.27522 4.87275 5.52762 5.54559 5.30336C6.51748 5.00432 6.81652 3.73339 6.06892 2.98579L3.97562 0.892493C3.37754 0.369169 2.48041 0.369169 1.95709 0.892493L0.536636 2.31294C-0.883814 3.80815 0.686158 7.77046 4.1999 11.2842C7.71365 14.798 11.676 16.4427 13.1712 14.9475L14.5916 13.527C15.115 12.9289 15.115 12.0318 14.5916 11.5085Z" fill="#F1C40F" />
@@ -57,7 +57,7 @@
                       <rect width="15" height="15" fill="white" transform="translate(0 0.5)" />
                     </clipPath>
                   </defs>
-                </svg> +1 847 957 39 57 </a>
+                </svg> <?php echo get_field('phone_number'); ?></a>
               <button class="button  button--color-primary-2   button-- openPopup-form-popup  "> Book Now </button>
               <div class="header__menu">
                 <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,4 +71,38 @@
           </div>
         </div>
       </header>
-	
+
+      <div class="menu">
+        <div class="menu__close">
+          <img src="<?php echo get_template_directory_uri(); ?>/src/static/app/img/ico-close.svg" alt="close">
+        </div>
+        <div class="menu__inner">
+          <a href="" class="menu__logo header__logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/src/static/app/img/logo-black.svg" alt="RaccoCleaning">
+          </a>
+          <div class="menu__btn">
+            <a href="tel:<?php echo str_replace(' ', '', get_field('phone_number')); ?>" class="button  button--color-primary-2   button--no-border  ">
+              <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_142_56)">
+                  <path d="M14.5916 11.5085L12.4983 9.41519C11.7507 8.66759 10.4798 8.96666 10.1807 9.93852C9.95646 10.6114 9.20886 10.9852 8.53601 10.8356C7.0408 10.4618 5.02227 8.51807 4.64847 6.9481C4.42418 6.27522 4.87275 5.52762 5.54559 5.30336C6.51748 5.00432 6.81652 3.73339 6.06892 2.98579L3.97562 0.892493C3.37754 0.369169 2.48041 0.369169 1.95709 0.892493L0.536636 2.31294C-0.883814 3.80815 0.686158 7.77046 4.1999 11.2842C7.71365 14.798 11.676 16.4427 13.1712 14.9475L14.5916 13.527C15.115 12.9289 15.115 12.0318 14.5916 11.5085Z" fill="#F1C40F" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_142_56">
+                    <rect width="15" height="15" fill="white" transform="translate(0 0.5)" />
+                  </clipPath>
+                </defs>
+              </svg> <?php echo get_field('phone_number'); ?> </a>
+          </div>
+
+          <?php
+              wp_nav_menu(
+                array(
+                  'theme_location'   => 'header_menu',
+                  'container'        => 'nav', 
+                  'container_class'  => 'menu__nav',
+                  'menu_class'       => '',
+                )
+              );
+            ?>
+        </div>
+      </div>
