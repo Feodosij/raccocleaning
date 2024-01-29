@@ -50,6 +50,7 @@ function raccocleaning_setup() {
 	register_nav_menus(
 		array(
 			'header_menu' => esc_html__( 'Header Menu', 'raccocleaning' ),
+			'footer_menu' => esc_html__( 'Footer Menu', 'raccocleaning' ),
 		)
 	);
 
